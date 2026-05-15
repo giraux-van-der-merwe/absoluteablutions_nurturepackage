@@ -82,7 +82,13 @@ function LayerTag({ number, label }: { number: string; label: string }) {
 
 // ─── Header ───────────────────────────────────────────────────────────────────
 
-function Header() {
+function Header({
+  simplified,
+  onToggle,
+}: {
+  simplified: boolean;
+  onToggle: () => void;
+}) {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -91,33 +97,69 @@ function Header() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  const isLight = scrolled || simplified;
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
+        isLight
           ? "bg-[#FAF6EF]/95 backdrop-blur-sm shadow-sm border-b border-[#D8C8B4]"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1160px] mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="max-w-[1160px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
         <Image
           src="/logo.png"
           alt="Desert Signal"
           width={152}
           height={38}
           className={`h-8 w-auto object-contain transition-all duration-300 ${
-            scrolled ? "" : "brightness-0 invert"
+            isLight ? "" : "brightness-0 invert"
           }`}
           priority
         />
-        <span
-          className={`text-sm font-medium transition-colors duration-300 hidden sm:block ${
-            scrolled ? "text-[#4A2812]" : "text-[#FAF6EF]/80"
-          }`}
-          style={{ fontFamily: "var(--font-archivo)" }}
-        >
-          Prepared for Absolute Ablutions
-        </span>
+        <div className="flex items-center gap-4">
+          <span
+            className={`text-sm font-medium transition-colors duration-300 hidden sm:block ${
+              isLight ? "text-[#4A2812]" : "text-[#FAF6EF]/80"
+            }`}
+            style={{ fontFamily: "var(--font-archivo)" }}
+          >
+            Prepared for Absolute Ablutions
+          </span>
+          <button
+            onClick={onToggle}
+            className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-wide uppercase transition-all duration-300 border ${
+              simplified
+                ? "bg-[#4A2812] text-[#FAF6EF] border-[#4A2812]"
+                : isLight
+                ? "bg-transparent text-[#4A2812]/60 border-[#D8C8B4] hover:border-[#4A2812] hover:text-[#4A2812]"
+                : "bg-transparent text-[#FAF6EF]/70 border-[#FAF6EF]/30 hover:border-[#FAF6EF]/70 hover:text-[#FAF6EF]"
+            }`}
+            style={{ fontFamily: "var(--font-archivo)" }}
+          >
+            {simplified ? (
+              <>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                  <rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                  <rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                  <rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.5" />
+                </svg>
+                <span className="hidden sm:inline">Full View</span>
+              </>
+            ) : (
+              <>
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                  <line x1="2" y1="3" x2="12" y2="3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="2" y1="7" x2="12" y2="7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  <line x1="2" y1="11" x2="9" y2="11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                </svg>
+                <span className="hidden sm:inline">Simplify</span>
+              </>
+            )}
+          </button>
+        </div>
       </div>
     </header>
   );
@@ -1231,20 +1273,484 @@ function Footer() {
   );
 }
 
+// ─── Simplified View ──────────────────────────────────────────────────────────
+
+function SectionHeading({ children }: { children: ReactNode }) {
+  return (
+    <div className="mt-14 mb-6">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="h-px w-6 bg-[#D48442]" />
+        <span
+          className="text-[#D48442] text-xs font-bold tracking-[0.18em] uppercase"
+          style={{ fontFamily: "var(--font-archivo)" }}
+        >
+          {children}
+        </span>
+      </div>
+    </div>
+  );
+}
+
+function SubHeading({ children }: { children: ReactNode }) {
+  return (
+    <h3
+      className="text-[#4A2812] font-bold text-lg mt-10 mb-3"
+      style={{ fontFamily: "var(--font-archivo)" }}
+    >
+      {children}
+    </h3>
+  );
+}
+
+function Body({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return (
+    <p
+      className={`text-[#4A2812]/75 leading-[1.85] mb-4 ${className}`}
+      style={{ fontSize: "17px" }}
+    >
+      {children}
+    </p>
+  );
+}
+
+function SimpleList({ items }: { items: string[] }) {
+  return (
+    <ul className="space-y-2.5 mb-6">
+      {items.map((item, i) => (
+        <li key={i} className="flex gap-3 items-start">
+          <span
+            className="flex-shrink-0 w-5 h-5 rounded-full bg-[#D48442] text-[#FAF6EF] text-[10px] font-bold flex items-center justify-center mt-[3px]"
+            style={{ fontFamily: "var(--font-archivo)" }}
+          >
+            {i + 1}
+          </span>
+          <span className="text-[#4A2812]/75 leading-relaxed" style={{ fontSize: "16px" }}>
+            {item}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function BulletList({ items }: { items: string[] }) {
+  return (
+    <ul className="space-y-2 mb-6">
+      {items.map((item, i) => (
+        <li key={i} className="flex gap-3 items-start">
+          <div className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-[#D48442] mt-[9px]" />
+          <span className="text-[#4A2812]/75 leading-relaxed" style={{ fontSize: "16px" }}>
+            {item}
+          </span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function Divider() {
+  return <div className="border-t border-[#D8C8B4] my-10" />;
+}
+
+function SimplifiedView() {
+  return (
+    <div className="bg-[#FAF6EF] min-h-screen pt-28 pb-28 px-6">
+      <div className="max-w-[680px] mx-auto">
+
+        {/* Document header */}
+        <div className="mb-12">
+          <p
+            className="text-[#D48442] text-xs font-bold tracking-[0.18em] uppercase mb-4"
+            style={{ fontFamily: "var(--font-archivo)" }}
+          >
+            Nurture Package Proposal
+          </p>
+          <h1
+            className="text-[#4A2812] font-black leading-[1.08] mb-6"
+            style={{ fontFamily: "var(--font-archivo)", fontSize: "clamp(2.2rem, 5vw, 3.4rem)" }}
+          >
+            Educate the lead until
+            <br />
+            <span className="text-[#D48442]">they sell themselves.</span>
+          </h1>
+          <p className="text-[#4A2812]/45 text-sm" style={{ fontFamily: "var(--font-archivo)" }}>
+            Prepared by Desert Signal · 12 May 2026
+            <br />
+            For: Alet Byers &amp; Gerhard Scheepers
+          </p>
+        </div>
+
+        <Divider />
+
+        {/* Strategic Idea */}
+        <SectionHeading>The Strategic Idea</SectionHeading>
+
+        <Body>
+          Many leads who contact Absolute Ablutions already have intent. They came from a Google search or a targeted ad. Our goal is to answer all their questions and objections before they know to ask them.
+        </Body>
+
+        <Body>
+          The nurture package aims to turn leads into clients by <strong className="text-[#4A2812]">educating the lead until they sell themselves.</strong>
+        </Body>
+
+        <Body>
+          The approach is borrowed from a framework called <em>They Ask, You Answer</em> — the principle that the businesses that answer buyer questions most completely and honestly win the most trust and, ultimately, the most sales. The content isn&rsquo;t about Absolute Ablutions. It&rsquo;s about <strong className="text-[#4A2812]">how to buy right</strong> — and Absolute Ablutions happens to be the obvious answer at the end of that journey.
+        </Body>
+
+        <Body>This package has three layers:</Body>
+        <SimpleList items={[
+          "The Guide — a downloadable asset that anchors the whole ecosystem",
+          "Email sequences — an educational course and targeted objection sequences",
+          "WhatsApp touchpoints — warm, human follow-up integrated with the email flow",
+        ]} />
+
+        <Body>
+          The main focus lies on the guide and email sequences, with WhatsApp serving as connectors and follow-up. As a foundation phase, we answer the questions that apply most broadly to most ICPs.
+        </Body>
+
+        <Divider />
+
+        {/* Layer 1 */}
+        <SectionHeading>Layer 1 — The Guide</SectionHeading>
+
+        <p
+          className="text-[#4A2812] font-bold text-xl mb-2 italic leading-snug"
+          style={{ fontFamily: "var(--font-archivo)" }}
+        >
+          &ldquo;The Complete Buyer&rsquo;s Guide to Mobile Ablution Facilities&rdquo;
+        </p>
+        <p className="text-[#A45A2A] text-sm mb-6" style={{ fontFamily: "var(--font-archivo)" }}>
+          Example title
+        </p>
+
+        <Body>
+          A multi-page downloadable PDF that can be used by the sales team via email or WhatsApp. It answers every major question a buyer has before they feel confident purchasing. This guide is branded for Absolute Ablutions, but is not a product brochure — it aims to be genuinely useful to any buyer, regardless of which manufacturer they end up choosing, earning trust by not selling.
+        </Body>
+
+        <SubHeading>Contents</SubHeading>
+        <SimpleList items={[
+          "How to assess your actual requirements (use case, capacity, frequency)",
+          "The technology decisions: Cleanflush vs. Recycle",
+          "What quality looks like: build spec, certifications, warranty, etc.",
+          "Understanding total cost: purchase price vs. hire vs. 3-year ownership cost",
+          "Maintenance realities: what breaks, what it costs, what support to expect",
+          "Safety compliance: what Mine Ready means, ramp gradients, SANS standards",
+          "Custom vs. standard: when to spec bespoke and what the process looks like",
+          "Questions to ask any manufacturer before you buy",
+        ]} />
+
+        <SubHeading>Goal with the guide</SubHeading>
+        <BulletList items={[
+          "Leads who download this are high-intent. Downloading is a buying signal.",
+          "The guide download could trigger a HubSpot task for a sales rep to follow up, if used as a lead magnet.",
+          "It serves as a leave-behind, a forward-to-colleague asset, and a WhatsApp share.",
+          "Sections map directly to email topics — each email can offer to go deeper with the guide.",
+        ]} />
+
+        <Divider />
+
+        {/* Layer 2 */}
+        <SectionHeading>Layer 2 — Email Sequences</SectionHeading>
+
+        <SubHeading>A. The Educational Email Course</SubHeading>
+        <p
+          className="text-[#A45A2A] text-xs font-bold tracking-widest uppercase mb-3"
+          style={{ fontFamily: "var(--font-archivo)" }}
+        >
+          Triggered by: guide download, quote request, or manually enrolled by sales rep
+        </p>
+
+        <Body>
+          This is the main sequence. Framed as a short course — &ldquo;over the next [x] days, here&rsquo;s what we&rsquo;ll cover.&rdquo; The lead knows what&rsquo;s coming and is more likely to read each one. It&rsquo;s a structured educational experience that mirrors the guide in shorter form.
+        </Body>
+
+        <p className="text-[#4A2812] font-bold mb-4 italic" style={{ fontFamily: "var(--font-archivo)" }}>
+          Example course title: &ldquo;How to Buy a Mobile Ablution Unit: What Most Buyers Don&rsquo;t Know Before They Spend&rdquo;
+        </p>
+
+        <Body>Topics — one per email:</Body>
+        <SimpleList items={[
+          "What to look for before you compare prices — the quality signals buyers miss (certifications, build materials, etc.)",
+          "The real cost of ownership — hire vs. buy, 3-year maths, what most suppliers don't tell you about maintenance costs",
+          "The technology questions — Cleanflush vs. Recycle, solar independence, capacity sizing",
+          "What good after-sales looks like — warranty terms, spare parts availability, technical support, what happens when something goes wrong on-site",
+          "Safety and compliance — ramp gradients, Mine Ready specifications, SANS standards, what to ask before deploying on a regulated site",
+          "Custom vs. standard — when it's worth speccing bespoke, what the process looks like, and what it costs",
+        ]} />
+
+        <Body>
+          <strong className="text-[#4A2812]">Cadence:</strong> One email every 3–4 days. Full course delivered in approximately 3 weeks.
+        </Body>
+        <Body>
+          <strong className="text-[#4A2812]">Format:</strong> Short-form (300–400 words), visually clean, one idea per email, one link or CTA per email. Mobile-readable. Can link to relevant blog articles and specific product pages for leads who want to go deeper.
+        </Body>
+        <Body>
+          <strong className="text-[#4A2812]">End of course CTA:</strong> Download the full guide, or book a factory visit / request a quote.
+        </Body>
+
+        <SubHeading>B. Objection-Specific Sequences</SubHeading>
+
+        <Body>
+          Triggered manually by the sales rep in HubSpot when a specific objection is raised. These are shorter sequences — used when a warm lead stalls on a specific issue. The rep identifies the blocker, enrolls the lead in the relevant sequence, and the emails go out automatically. The rep follows up after the sequence ends.
+        </Body>
+
+        <div className="mt-8 space-y-8">
+          {[
+            {
+              code: "B1",
+              title: "\"It's more expensive than I expected\"",
+              note: "4 emails. Reframes the conversation from price to value. Gives the lead the maths and lets them draw their own conclusion.",
+              items: [
+                "What the price includes that cheaper options don't (build spec, certification, warranty, after-sales)",
+                "The 3-year ownership cost vs. 3 years of hire",
+                "What happens when a cheaper unit fails: real costs of downtime, replacement parts, no-support scenarios",
+                "The asset framing: it's on your balance sheet, it generates revenue or eliminates cost every deployment",
+              ],
+            },
+            {
+              code: "B2",
+              title: "\"What does maintenance actually involve?\"",
+              note: "4 emails. For leads who are worried about owning something they'll have to maintain.",
+              items: [
+                "What routine maintenance looks like (realistic, not scary)",
+                "What the 1-year manufacturer's warranty covers",
+                "Where spare parts come from and how fast they arrive",
+                "What technical support looks like in practice — direct line, not a call centre",
+                "Comparison: maintaining a unit you own vs. dealing with a hire company's damaged or poorly-serviced stock",
+              ],
+            },
+            {
+              code: "B3",
+              title: "\"Can you do something custom / different from what's on the website?\"",
+              note: "3 emails. For leads with a specific requirement standard products don't obviously meet. This is a buying signal, not an objection.",
+              items: [
+                "What the design process looks like",
+                "What kinds of customisation are possible: interior spec, branding, layout, system type",
+                "Examples of custom units built for specific use cases (without revealing client details)",
+                "Timeline and what the lead needs to provide to start the process",
+                "CTA: let's start with a brief — here's what we need from you",
+              ],
+            },
+            {
+              code: "B4",
+              title: "\"Come back to me in [X months]\"",
+              note: "5 emails. For leads with genuine timing delays. Keeps AA present and useful without being annoying. Spaced monthly.",
+              items: [
+                "Immediate: low-pressure acknowledgement, confirms you'll be in touch",
+                "Month 2: educational piece matched to their industry",
+                "Month 3: relevant social proof — a client in a similar situation",
+                "Month 4–5: lead time reminder — practical flag as project date approaches",
+                "Month 5–6: direct re-engagement — \"your timing window is opening, here's where we left off\"",
+              ],
+            },
+          ].map((seq) => (
+            <div key={seq.code}>
+              <div className="flex items-start gap-3 mb-2">
+                <span
+                  className="flex-shrink-0 mt-0.5 text-[#D48442] text-xs font-bold tracking-wider"
+                  style={{ fontFamily: "var(--font-archivo)" }}
+                >
+                  {seq.code}
+                </span>
+                <p
+                  className="text-[#4A2812] font-bold"
+                  style={{ fontFamily: "var(--font-archivo)", fontSize: "16px" }}
+                >
+                  {seq.title}
+                </p>
+              </div>
+              <p className="text-[#4A2812]/55 text-sm italic mb-3 pl-8">{seq.note}</p>
+              <div className="pl-8">
+                <BulletList items={seq.items} />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <Divider />
+
+        {/* Layer 3 */}
+        <SectionHeading>Layer 3 — WhatsApp Touchpoints</SectionHeading>
+
+        <Body>
+          Simple WhatsApp messages aimed at keeping the lead warm and following up when there is no response to emails. They point to the guide and remind about the email sequence. Concise, never a text wall.
+        </Body>
+
+        <SubHeading>Suggested touchpoints</SubHeading>
+        <BulletList items={[
+          "After quote sent (Day 2) — check receipt, invite questions",
+          "After guide downloaded (same day) — acknowledge download, flag email sequence",
+          "After no email response for 5 days — gentle check-in, offer WhatsApp as alternative",
+          "Factory visit invitation — offer in-person viewing at Blackheath factory",
+          "Custom enquiry follow-up — reference their specific requirement, invite a call",
+        ]} />
+
+        <Body>
+          HubSpot integrates with WhatsApp Business API via tools like Twilio or native HubSpot WhatsApp integration. We recommend setting this up before launching sequences so rep activity is tracked centrally.
+        </Body>
+
+        <Divider />
+
+        {/* Connection */}
+        <SectionHeading>How the Pieces Connect</SectionHeading>
+
+        <Body>
+          A lead enters through one of two paths: a Google or paid ad click that leads to a quote request form, or a guide download via the website or a WhatsApp share. Both paths feed into the same system.
+        </Body>
+
+        <Body>
+          For quote requests, the sales rep qualifies the lead and manually enrolls them in the educational course, a specific objection sequence, or sends the guide directly. For guide downloads, HubSpot fires a task for the rep to reach out within 24 hours — and the lead is then enrolled in the educational course.
+        </Body>
+
+        <Body>
+          From there, leads progress through the course. Those who engage deeply get linked to relevant articles and product pages. Those who stall on a specific objection get enrolled in the matching sequence by the rep. At the end of the course, the CTA drives toward a factory visit, a quote request, or a direct follow-up call.
+        </Body>
+
+        <Divider />
+
+        {/* Deliverables */}
+        <SectionHeading>Deliverables Summary</SectionHeading>
+
+        <div className="space-y-3 mb-6">
+          {[
+            { id: "01", asset: "Buyer's Guide", format: "PDF (10–15 pages)", note: "Anchor asset" },
+            { id: "02", asset: "Educational email course", format: "6 emails", note: "300–400 words each" },
+            { id: "03", asset: "Objection sequence B1", format: "4 emails", note: "Price / value" },
+            { id: "04", asset: "Objection sequence B2", format: "4 emails", note: "Maintenance & aftercare" },
+            { id: "05", asset: "Objection sequence B3", format: "3 emails", note: "Custom options" },
+            { id: "06", asset: "Objection sequence B4", format: "5 emails", note: "Timing / come back later" },
+            { id: "07", asset: "WhatsApp templates", format: "Set", note: "Covers key touchpoints" },
+          ].map((d) => (
+            <div key={d.id} className="flex gap-4 items-baseline border-b border-[#D8C8B4]/50 pb-3">
+              <span
+                className="flex-shrink-0 text-[#D48442] text-xs font-bold w-6"
+                style={{ fontFamily: "var(--font-archivo)" }}
+              >
+                {d.id}
+              </span>
+              <span
+                className="flex-1 text-[#4A2812] font-semibold text-sm"
+                style={{ fontFamily: "var(--font-archivo)" }}
+              >
+                {d.asset}
+              </span>
+              <span className="text-[#4A2812]/45 text-sm">{d.format}</span>
+              <span className="text-[#4A2812]/40 text-xs hidden sm:block">{d.note}</span>
+            </div>
+          ))}
+        </div>
+
+        <Body>
+          Page and email counts may change based on content. As each asset is completed, it is immediately useable and shared. In order: Buyer&rsquo;s Guide → Educational Email Course → Objection Sequences → WhatsApp Messages.
+        </Body>
+
+        <Divider />
+
+        {/* Timeline */}
+        <SectionHeading>Estimated Timeline — 6 Weeks</SectionHeading>
+
+        <div className="space-y-6">
+          {[
+            {
+              week: "1–2",
+              title: "Research & Information Gathering",
+              tasks: [
+                "General outlines for guide and email courses set up",
+                "Competitor research to identify gaps and differentiation",
+                "Request and gather information to ensure accuracy (your input needed)",
+                "Gather images and graphics as needed (your input needed)",
+              ],
+            },
+            {
+              week: "3–4",
+              title: "Development of Buyer's Guide",
+              tasks: ["Outlining and structure", "Drafts for approval", "Graphic layout and assembly", "Finals for approval"],
+            },
+            {
+              week: "5",
+              title: "Educational Email Course",
+              tasks: ["Written based on completed guide"],
+            },
+            {
+              week: "6",
+              title: "Objection Emails + WhatsApp",
+              tasks: ["Objection sequences written", "WhatsApp templates written"],
+            },
+          ].map((phase) => (
+            <div key={phase.week} className="flex gap-5 items-start">
+              <div
+                className="flex-shrink-0 w-14 h-14 rounded-xl bg-[#D48442] flex flex-col items-center justify-center text-[#FAF6EF]"
+              >
+                <span className="text-[8px] font-bold uppercase tracking-wider opacity-75" style={{ fontFamily: "var(--font-archivo)" }}>Wk</span>
+                <span className="text-base font-black leading-none" style={{ fontFamily: "var(--font-archivo)" }}>{phase.week}</span>
+              </div>
+              <div className="flex-1 pt-1">
+                <p className="text-[#4A2812] font-bold mb-2" style={{ fontFamily: "var(--font-archivo)" }}>
+                  {phase.title}
+                </p>
+                <ul className="space-y-1">
+                  {phase.tasks.map((t, i) => (
+                    <li key={i} className="flex gap-2 text-sm text-[#4A2812]/65">
+                      <div className="flex-shrink-0 w-1 h-1 rounded-full bg-[#D48442] mt-[7px]" />
+                      {t}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Footer */}
+        <div className="mt-16 pt-8 border-t border-[#D8C8B4] flex items-center justify-between">
+          <Image
+            src="/logo.png"
+            alt="Desert Signal"
+            width={120}
+            height={30}
+            className="h-6 w-auto object-contain opacity-70"
+          />
+          <a
+            href="mailto:giraux@getdesertsignal.com"
+            className="text-[#D48442] text-sm hover:text-[#A45A2A] transition-colors"
+            style={{ fontFamily: "var(--font-archivo)" }}
+          >
+            giraux@getdesertsignal.com
+          </a>
+        </div>
+
+      </div>
+    </div>
+  );
+}
+
 // ─── Page ─────────────────────────────────────────────────────────────────────
 
 export default function Home() {
+  const [simplified, setSimplified] = useState(false);
+
   return (
     <main>
-      <Header />
-      <Hero />
-      <StrategicIdea />
-      <LayerOne />
-      <LayerTwo />
-      <LayerThree />
-      <ConnectionFlow />
-      <Deliverables />
-      <Footer />
+      <Header simplified={simplified} onToggle={() => setSimplified((s) => !s)} />
+      <div
+        className="transition-opacity duration-500"
+        style={{ opacity: 1 }}
+      >
+        {simplified ? (
+          <SimplifiedView />
+        ) : (
+          <>
+            <Hero />
+            <StrategicIdea />
+            <LayerOne />
+            <LayerTwo />
+            <LayerThree />
+            <ConnectionFlow />
+            <Deliverables />
+            <Footer />
+          </>
+        )}
+      </div>
     </main>
   );
 }
