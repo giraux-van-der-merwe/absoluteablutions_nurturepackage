@@ -1264,11 +1264,8 @@ function Footer() {
 
 function SectionHeading({ children }: { children: ReactNode }) {
   return (
-    <div className="mt-14 mb-6">
-      <span
-        className="text-[#D48442] text-xs font-bold tracking-[0.18em] uppercase"
-        style={{ fontFamily: "var(--font-archivo)" }}
-      >
+    <div className="mt-14 mb-5">
+      <span className="text-[#D48442] text-[11px] font-semibold tracking-[0.2em] uppercase">
         {children}
       </span>
     </div>
@@ -1277,10 +1274,7 @@ function SectionHeading({ children }: { children: ReactNode }) {
 
 function SubHeading({ children }: { children: ReactNode }) {
   return (
-    <h3
-      className="text-[#4A2812] font-bold text-lg mt-10 mb-3"
-      style={{ fontFamily: "var(--font-archivo)" }}
-    >
+    <h3 className="text-[#4A2812] font-bold text-[1.1rem] mt-9 mb-3 leading-snug">
       {children}
     </h3>
   );
@@ -1302,10 +1296,7 @@ function SimpleList({ items }: { items: string[] }) {
     <ul className="space-y-2.5 mb-6">
       {items.map((item, i) => (
         <li key={i} className="flex gap-3 items-start">
-          <span
-            className="flex-shrink-0 w-5 h-5 rounded-full bg-[#D48442] text-[#FAF6EF] text-[10px] font-bold flex items-center justify-center mt-[3px]"
-            style={{ fontFamily: "var(--font-archivo)" }}
-          >
+          <span className="flex-shrink-0 w-5 h-5 rounded-full bg-[#D48442] text-[#FAF6EF] text-[10px] font-bold flex items-center justify-center mt-[3px]">
             {i + 1}
           </span>
           <span className="text-[#4A2812]/75 leading-relaxed" style={{ fontSize: "16px" }}>
@@ -1343,21 +1334,17 @@ function SimplifiedView() {
 
         {/* Document header */}
         <div className="mb-12">
-          <p
-            className="text-[#D48442] text-xs font-bold tracking-[0.18em] uppercase mb-4"
-            style={{ fontFamily: "var(--font-archivo)" }}
-          >
+          <p className="text-[#D48442] text-[11px] font-semibold tracking-[0.2em] uppercase mb-5">
             Nurture Package Proposal
           </p>
           <h1
-            className="text-[#4A2812] font-black leading-[1.08] mb-6"
-            style={{ fontFamily: "var(--font-archivo)", fontSize: "clamp(2.2rem, 5vw, 3.4rem)" }}
+            className="text-[#4A2812] font-bold leading-[1.1] mb-6"
+            style={{ fontSize: "clamp(2rem, 5vw, 3rem)" }}
           >
-            Educate the lead until
-            <br />
+            Educate the lead until{" "}
             <span className="text-[#D48442]">they sell themselves.</span>
           </h1>
-          <p className="text-[#4A2812]/45 text-sm" style={{ fontFamily: "var(--font-archivo)" }}>
+          <p className="text-[#4A2812]/40 text-sm">
             Prepared by Desert Signal · 15 May 2026
             <br />
             For: Alet Byers &amp; Gerhard Scheepers
@@ -1374,11 +1361,11 @@ function SimplifiedView() {
         </Body>
 
         <Body>
-          The nurture package aims to turn leads into clients by <strong className="text-[#4A2812]">educating the lead until they sell themselves.</strong>
+          <strong className="text-[#4A2812] font-semibold">The nurture package aims to turn leads into clients by educating the lead until they sell themselves.</strong>
         </Body>
 
         <Body>
-          The approach is borrowed from a framework called <em>They Ask, You Answer</em> — the principle that the businesses that answer buyer questions most completely and honestly win the most trust and, ultimately, the most sales. The content isn&rsquo;t about Absolute Ablutions. It&rsquo;s about <strong className="text-[#4A2812]">how to buy right</strong> — and Absolute Ablutions happens to be the obvious answer at the end of that journey.
+          The approach is borrowed from a framework called <em>They Ask, You Answer</em> — the principle that the businesses that answer buyer questions most completely and honestly win the most trust and, ultimately, the most sales. The content isn&rsquo;t about Absolute Ablutions. It&rsquo;s about how to buy right — and Absolute Ablutions happens to be the obvious answer at the end of that journey.
         </Body>
 
         <Body>This package has three layers:</Body>
