@@ -1236,7 +1236,7 @@ function Footer() {
             alt="Desert Signal"
             width={152}
             height={38}
-            className="h-8 w-auto object-contain brightness-0 invert opacity-90"
+            className="h-8 w-auto object-contain opacity-90"
           />
         </div>
         <div className="text-left md:text-right">
