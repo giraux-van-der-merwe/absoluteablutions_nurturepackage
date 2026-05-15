@@ -298,16 +298,11 @@ function StrategicIdea() {
             </h2>
           </FadeIn>
           <FadeIn delay={100}>
-            <p className="text-[#4A2812]/75 text-lg leading-relaxed mb-5">
+            <p className="text-[#4A2812]/75 text-lg leading-relaxed">
               The approach is borrowed from a framework called{" "}
-              <em>They Ask, You Answer</em> — the principle that businesses that answer buyer
+              <em>They Ask, You Answer</em>: The principle that the businesses that answer buyer
               questions most completely and honestly win the most trust and, ultimately, the most
               sales.
-            </p>
-            <p className="text-[#4A2812]/75 text-lg leading-relaxed">
-              The content isn&rsquo;t about Absolute Ablutions. It&rsquo;s about{" "}
-              <strong className="text-[#4A2812]">how to buy right</strong> — and Absolute Ablutions
-              happens to be the obvious answer at the end of that journey.
             </p>
           </FadeIn>
         </div>
@@ -330,7 +325,7 @@ function StrategicIdea() {
                 {
                   n: "2",
                   title: "Email Sequences",
-                  desc: "An educational course and targeted objection sequences",
+                  desc: "An educational course + targeted objection sequences",
                 },
                 {
                   n: "3",
@@ -359,9 +354,10 @@ function StrategicIdea() {
             </div>
             <div className="mt-8 pt-6 border-t border-[#D8C8B4]">
               <p className="text-[#4A2812]/55 text-sm italic leading-relaxed">
-                The main focus lies on the guide and email sequences, with WhatsApp serving as
-                connector and follow-up. As a foundation phase, we answer the questions that apply
-                most broadly to most ICPs.
+                The main focus here lies on the guide and email sequences, with WhatsApp touchpoints
+                serving as connectors and follow-up. Going forward, each of these assets can be
+                further refined and aimed at specific ICPs, but as a foundation phase we will aim to
+                answer the questions that apply most broadly to most ICPs.
               </p>
             </div>
           </div>
