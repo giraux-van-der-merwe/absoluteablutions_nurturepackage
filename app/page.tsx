@@ -1265,15 +1265,12 @@ function Footer() {
 function SectionHeading({ children }: { children: ReactNode }) {
   return (
     <div className="mt-14 mb-6">
-      <div className="flex items-center gap-3 mb-3">
-        <div className="h-px w-6 bg-[#D48442]" />
-        <span
-          className="text-[#D48442] text-xs font-bold tracking-[0.18em] uppercase"
-          style={{ fontFamily: "var(--font-archivo)" }}
-        >
-          {children}
-        </span>
-      </div>
+      <span
+        className="text-[#D48442] text-xs font-bold tracking-[0.18em] uppercase"
+        style={{ fontFamily: "var(--font-archivo)" }}
+      >
+        {children}
+      </span>
     </div>
   );
 }
