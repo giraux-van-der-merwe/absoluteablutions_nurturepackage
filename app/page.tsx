@@ -114,7 +114,7 @@ function Header({
           width={152}
           height={38}
           className={`h-8 w-auto object-contain transition-all duration-300 ${
-            isLight ? "" : "brightness-0 invert"
+            isLight ? "[mix-blend-mode:multiply]" : "brightness-0 invert"
           }`}
           priority
         />
@@ -1708,7 +1708,7 @@ function SimplifiedView() {
             alt="Desert Signal"
             width={120}
             height={30}
-            className="h-6 w-auto object-contain opacity-70"
+            className="h-6 w-auto object-contain opacity-70 [mix-blend-mode:multiply]"
           />
           <a
             href="mailto:giraux@getdesertsignal.com"
