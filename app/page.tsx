@@ -114,7 +114,7 @@ function Header({
           width={152}
           height={38}
           className={`h-8 w-auto object-contain transition-all duration-300 ${
-            isLight ? "[mix-blend-mode:multiply]" : "brightness-0 invert"
+            isLight ? "" : "brightness-0 invert"
           }`}
           priority
         />
@@ -1246,11 +1246,8 @@ function Footer() {
             alt="Desert Signal"
             width={152}
             height={38}
-            className="h-8 w-auto object-contain brightness-0 invert mb-4 opacity-90"
+            className="h-8 w-auto object-contain brightness-0 invert opacity-90"
           />
-          <p className="text-[#D8C8B4]/55 text-sm">
-            A clear signal for real-world service businesses.
-          </p>
         </div>
         <div className="text-left md:text-right">
           <p
@@ -1708,7 +1705,7 @@ function SimplifiedView() {
             alt="Desert Signal"
             width={120}
             height={30}
-            className="h-6 w-auto object-contain opacity-70 [mix-blend-mode:multiply]"
+            className="h-6 w-auto object-contain opacity-70"
           />
           <a
             href="mailto:giraux@getdesertsignal.com"
