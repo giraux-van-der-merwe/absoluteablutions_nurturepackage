@@ -598,8 +598,7 @@ function LayerTwo() {
               fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
             }}
           >
-            A structured educational experience,{" "}
-            <span className="text-[#D48442]">not a mailout.</span>
+            A structured educational experience.
           </h2>
           <p className="text-[#4A2812]/70 text-lg leading-relaxed mb-12 max-w-2xl">
             Two types: a main educational course triggered by guide download or quote request, and
@@ -860,9 +859,7 @@ function LayerThree() {
               fontSize: "clamp(1.8rem, 3.5vw, 3rem)",
             }}
           >
-            Warm. Human.
-            <br />
-            <span className="text-[#D48442]">Never a text wall.</span>
+            Helpful and Human.
           </h2>
           <p className="text-[#4A2812]/70 text-lg leading-relaxed mb-12 max-w-2xl">
             Simple WhatsApp messages aimed at keeping the lead warm and following up when there is no
@@ -1365,18 +1362,22 @@ function SimplifiedView() {
         </Body>
 
         <Body>
-          The approach is borrowed from a framework called <em>They Ask, You Answer</em> — the principle that the businesses that answer buyer questions most completely and honestly win the most trust and, ultimately, the most sales. The content isn&rsquo;t about Absolute Ablutions. It&rsquo;s about how to buy right — and Absolute Ablutions happens to be the obvious answer at the end of that journey.
+          The approach is borrowed from a framework called <em>They Ask, You Answer</em>: The principle that the businesses that answer buyer questions most completely and honestly win the most trust and, ultimately, the most sales.
         </Body>
 
         <Body>This package has three layers:</Body>
         <SimpleList items={[
           "The Guide — a downloadable asset that anchors the whole ecosystem",
-          "Email sequences — an educational course and targeted objection sequences",
+          "Email sequences — an educational course + targeted objection sequences",
           "WhatsApp touchpoints — warm, human follow-up integrated with the email flow",
         ]} />
 
         <Body>
-          The main focus lies on the guide and email sequences, with WhatsApp serving as connectors and follow-up. As a foundation phase, we answer the questions that apply most broadly to most ICPs.
+          The main focus here lies on the guide and email sequences, with WhatsApp touchpoints serving as connectors and follow-up.
+        </Body>
+
+        <Body>
+          Going forward, each of these assets can be further refined and aimed at specific ICPs, but as a foundation phase we will aim to answer the questions that apply most broadly to most ICPs.
         </Body>
 
         <Divider />
