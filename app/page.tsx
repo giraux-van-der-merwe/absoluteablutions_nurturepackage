@@ -101,11 +101,7 @@ function Header({
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isLight
-          ? "bg-[#FAF6EF]/95 backdrop-blur-sm shadow-sm border-b border-[#D8C8B4]"
-          : "bg-transparent"
-      }`}
+      className="fixed top-0 left-0 right-0 z-50 bg-[#FAF6EF]/95 backdrop-blur-sm shadow-sm border-b border-[#D8C8B4]"
     >
       <div className="max-w-[1160px] mx-auto px-6 h-16 flex items-center justify-between gap-4">
         <Image
@@ -113,16 +109,12 @@ function Header({
           alt="Desert Signal"
           width={152}
           height={38}
-          className={`h-8 w-auto object-contain transition-all duration-300 ${
-            isLight ? "" : "brightness-0 invert"
-          }`}
+          className="h-8 w-auto object-contain"
           priority
         />
         <div className="flex items-center gap-4">
           <span
-            className={`text-sm font-medium transition-colors duration-300 hidden sm:block ${
-              isLight ? "text-[#4A2812]" : "text-[#FAF6EF]/80"
-            }`}
+            className="text-sm font-medium hidden sm:block text-[#4A2812]"
             style={{ fontFamily: "var(--font-archivo)" }}
           >
             Prepared for Absolute Ablutions
@@ -132,9 +124,7 @@ function Header({
             className={`flex items-center gap-2 px-4 py-2 rounded-full text-xs font-bold tracking-wide uppercase transition-all duration-300 border ${
               simplified
                 ? "bg-[#4A2812] text-[#FAF6EF] border-[#4A2812]"
-                : isLight
-                ? "bg-transparent text-[#4A2812]/60 border-[#D8C8B4] hover:border-[#4A2812] hover:text-[#4A2812]"
-                : "bg-transparent text-[#FAF6EF]/70 border-[#FAF6EF]/30 hover:border-[#FAF6EF]/70 hover:text-[#FAF6EF]"
+                : "bg-transparent text-[#4A2812]/60 border-[#D8C8B4] hover:border-[#4A2812] hover:text-[#4A2812]"
             }`}
             style={{ fontFamily: "var(--font-archivo)" }}
           >
@@ -189,7 +179,7 @@ function Hero() {
               Nurture Package Proposal
             </span>
             <span className="text-[#D8C8B4]/50 text-sm" style={{ fontFamily: "var(--font-archivo)" }}>
-              12 May 2026 · Desert Signal
+              15 May 2026 · Desert Signal
             </span>
           </div>
         </FadeIn>
@@ -1371,7 +1361,7 @@ function SimplifiedView() {
             <span className="text-[#D48442]">they sell themselves.</span>
           </h1>
           <p className="text-[#4A2812]/45 text-sm" style={{ fontFamily: "var(--font-archivo)" }}>
-            Prepared by Desert Signal · 12 May 2026
+            Prepared by Desert Signal · 15 May 2026
             <br />
             For: Alet Byers &amp; Gerhard Scheepers
           </p>
